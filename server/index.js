@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(cors())
 
 // DEV
-// app.post('/seed', seed)
+app.post('/seed', seed)
 
 // COUNTRIES
 app.get('/countries', getCountries)

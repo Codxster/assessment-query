@@ -3,7 +3,7 @@ const {CONNECTION_STRING} = process.env
 
 const Sequelize = require('sequelize')
 
-const sequelize = new Sequelize(CONNECTION_STRING, {
+const sequelize = new Sequelize('postgres://tdubkdjabaimnl:106c5af9023d4f279c7eb67ed23e34ff5efe997cf6c0c71c7713f92b90f45002@ec2-35-170-21-76.compute-1.amazonaws.com:5432/d78qeg7em55qkh', {
     dialect: 'postgres',
     dialectOptions: {
         ssl: {
@@ -24,9 +24,9 @@ module.exports = {
 
             CREATE TABLE cities (
                 city_id SERIAL PRIMARY KEY,
-                name: varchar(30),
-                rating: INTEGER,
-                country_id = ${countries.country_id},
+                name varchar(30),
+                rating INTEGER,
+                country_id INTEGER REFERENCES countries(country_id)
             );
 
              
@@ -243,9 +243,8 @@ module.exports = {
         let {name, rating, countryId} = req.body
         
         sequelize.query(`
-        name: VARCHAR(30),
-        rating: INTEGER
-        country_id: INTEGER,
+        INSERT INTO countries (name, rating, country_id)
+        values ('')
         `)
         .then(dbRes => res.status(200).send(dbRes[0]))
         .catch(err => console.log(err))
